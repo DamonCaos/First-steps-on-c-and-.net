@@ -4,49 +4,45 @@ class Program
 {
     static void Main()
     {
-        // Saludo y petición de datos
-        Console.WriteLine("¡Hola! ¿Cómo te llamas?");
-        string nombre = Console.ReadLine();
+        string nombre = PedirNombre();
+        DateTime nacimiento = PedirFechaNacimiento();
+        int edad = CalcularEdad(nacimiento, DateTime.Now);
+        MostrarResultado(nombre, nacimiento, edad);
+    }
 
-        Console.WriteLine("¿En qué año naciste?");
-        string input = Console.ReadLine();
+    //Funciones
 
-        Console.WriteLine("¿En qué mes naciste? (1-12)");
-        string mesInput = Console.ReadLine();
-
-        Console.WriteLine("¿Qué día naciste? (1-31)");
-        string diaInput = Console.ReadLine();
-
-        // Convertir la entrada a número y validar
-        if (int.TryParse(input, out int anioNacimiento) &&
-            int.TryParse(mesInput, out int mesNacimiento) &&
-            int.TryParse(diaInput, out int diaNacimiento))
+    static string PedirNombre()
+    {
+        while (true)
         {
-            try
-            {
-                // Crear fecha de nacimiento
-                DateTime nacimiento = new DateTime(anioNacimiento, mesNacimiento, diaNacimiento);
-                DateTime hoy = DateTime.Now;
+            Console.Write("Hola, ¡Como te llamas?");
+            string nombre = console.ReadLine()?.Trim() ?? "";
+            if (!string.IsNullOrWhiteSpace(nombre)) return PedirNombre;
+            Console.WriteLine("El nombre no puede estar vacio, intentelo de nuevo.\n");
 
-                // Calcular edad
-                int edad = hoy.Year - nacimiento.Year;
-                if (hoy < nacimiento.AddYears(edad))
-                {
-                    edad--;
-                }
-
-                // Mostrar resultado
-                Console.WriteLine($"\n¡Hola {nombre}! Naciste el {diaNacimiento}/{mesNacimiento}/{anioNacimiento}, " +
-                                  $"así que tienes {edad} años.");
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("La fecha ingresada no es válida. Por favor, inténtalo de nuevo.");
-            }
         }
-        else
+    }
+
+    static int PedirEnteroEnRango(string mensaje, int min, inst max)
+    {
+        while (true)
         {
-            Console.WriteLine("Alguno de los valores introducidos no es válido, inténtalo de nuevo, por favor.");
+            Console.Write(mensaje);
+            string input = Console.ReadLine();
+
+            if (int.TryParse(input, out int valor) && valor >= min && valor <= max)
+            {
+                return valor;
+            }
+            Console.WriteLine($"Valor invalido, debe ser un numero entre {min} y {max}. Intente de nuevo.\n");
         }
+    }
+
+    static DateTime PedirFechaNacimiento()
+    {
+        int anioActual = DateTime.Now.Year;
+
+        int anio = PedirEnteroEnRango("¿En que año naciste? ", 1900.anioActual);
     }
 }
