@@ -12,13 +12,22 @@ class Program
         Console.WriteLine("¿En qué Año naciste?");
         string input = Console.ReadLine();
 
-        // Convertir la entrada a numero
-        int anioNacimiento = int.Parse(input);
+        // Convertir la entrada a numero, añadido TryParse para manejar errores
+        if (int.TryParse(input, out int anioNacimiento))
+        {
+            int anioActual = DateTime.Now.Year;
+            int edad = anioActual - anioNacimiento;
+            Console.WriteLine($"\nEncantado, {nombre}. Tienes aproximadamente {edad} años.");
 
-        // Calcula la edad
-        int anioActual = DateTime.Now.Year;
-        int edad = anioActual - anioNacimiento;
+        }
+        else
+        {
+            Console.WriteLine("Eso no parece un año válido, intentelo de nuevo, porfavor");
+        }
 
-        Console.WriteLine($"\nEncantado, {nombre}. Tienes aproximadamente {edad} años.");
+        
+        
+
+        
     }
 }
